@@ -1,0 +1,113 @@
+PDF Censor Script - User Manual
+
+## Overview
+This script is designed to redact sensitive information from single page PDFs.
+
+## Features
+- Redacts specified rectangles 
+- Processes a single PDF or an entire folder of PDFs
+- Preserves gender and age information (optional)
+- Removes document indentifying data from PDF metadata
+- You can specify the output directory 
+
+## Requirements
+- Python 3.6 or higher
+- `requirements.txt`
+
+## Installation
+
+### 1. Install Python
+From https://www.python.org/downloads/
+
+### 2. Install required libraries
+Navigate to the script directory and run:
+```
+pip install -r requirements.txt
+```
+
+
+
+### Basic Command Format
+```
+python pdf_censor.py [--file FILE_PATH | --folder FOLDER_PATH] [--output OUTPUT_DIR] [--no-info]
+```
+
+### Arguments
+- `--file`: Path to a single PDF to process
+- `--folder` or `-f`: Path to a folder containing multiple PDFs
+- `--output` or `-o`: Custom output directory (optional)
+- `--no-info`: Omit gender/age information in the output (optional)
+
+## Example Commands
+
+### Windows
+
+#### Process a single file
+```
+python pdf_censor.py --file "C:\Users\username\Documents\sample.pdf"
+```
+
+#### Process a folder of PDFs
+```
+python pdf_censor.py -f "C:\Users\username\Documents\PDFs"
+```
+
+#### Specify a custom output directory
+```
+python pdf_censor.py -f "C:\Users\username\Documents\PDFs" -o "C:\Users\username\Documents\Output"
+```
+
+#### Process without including gender/age information
+```
+python pdf_censor.py -f "C:\Users\username\Documents\PDFs" --no-info
+```
+
+### macOS
+
+#### Process a single file
+```
+python pdf_censor.py --file "/Users/username/Documents/sample.pdf"
+```
+
+#### Process a folder of PDFs
+```
+python pdf_censor.py -f "/Users/username/Documents/PDFs"
+```
+
+#### Specify a custom output directory
+```
+python pdf_censor.py -f "/Users/username/Documents/PDFs" -o "/Users/username/Documents/Output"
+```
+
+### Ubuntu/Linux
+
+#### Process a single file
+```
+python pdf_censor.py --file "/home/username/Documents/sample.pdf"
+```
+
+#### Process a folder of PDFs
+```
+python pdf_censor.py -f "/home/username/Documents/PDFs"
+```
+
+#### Specify a custom output directory
+```
+python pdf_censor.py -f "/home/username/Documents/PDFs" -o "/home/username/Documents/Output"
+```
+
+## Default Behavior
+
+- When processing a folder without specifying an output directory, censored PDFs are saved in a "Censored PDFs" folder at the same level as the input folder
+- Censored file names follow the pattern: `original_filename_censored.pdf`
+- Gender and age information is preserved by default (unless --no-info is specified)
+- Failed PDFs (multi-page or scanned) are automatically copied to a "Failed" subfolder within the output directory
+- The script will display a summary of processed and failed files at the end
+
+## Supported PDF Types
+
+The script only processes PDFs that meet the following criteria:
+- **Single-page PDFs**: Multi-page PDFs are not supported and will be skipped
+- **Text-based PDFs**: Scanned PDFs without extractable text cannot be processed and will be skipped
+- PDFs that don't meet these criteria are automatically moved to the "Failed" folder for manual review
+
